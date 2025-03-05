@@ -1,0 +1,17 @@
+{
+    "name": "keyboard",
+    "version": "1.0.0",
+    "description": "keyboard",
+    "dependencies": {
+        "core": "file:../core",
+        "radio": "file:../radio"
+    },
+    "files": [
+        "main.ts",
+        "keyboard.ts",
+        "keyboardoverrides.ts",
+        "shims.d.ts",
+        "enums.d.ts"
+    ],
+    "preferredEditor": "blocksprj"
+}
