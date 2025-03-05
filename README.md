@@ -13,7 +13,7 @@ This repository can be added as an **extension** in MakeCode.
 
 ## Blocks
 
-![image](https://github.com/Yeeeheee/pxt-keyboard/Images/blocks.png)
+![image](https://github.com/Yeeeheee/pxt-keyboard/blob/master/Images/blocks.png)
 
 ## Example
 
