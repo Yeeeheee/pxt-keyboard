@@ -1,5 +1,6 @@
+# pxt-keyboard
 
-> Open this page at [https://.github.io//](https://.github.io//)
+Micro:bit keyboard expansion
 
 ## Use as Extension
 
@@ -8,17 +9,25 @@ This repository can be added as an **extension** in MakeCode.
 * open []()
 * click on **New Project**
 * click on **Extensions** under the gearwheel menu
-* search for **https://github.com/** and import
+* search for **https://github.com/Yeeeheee/pxt-keyboard** and import
 
-## Edit this project
+## Blocks
 
-To edit this repository in MakeCode.
+![image](https://github.com/Yeeeheee/pxt-keyboard/Images/blocks.png)
 
-* open []()
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/** and click import
+## Example
 
-#### Metadata (used for search, rendering)
+Assign a button to make sound.
 
-* for PXT/
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+```blocks
+keyboard.F.onEvent(function () {
+    music.play(music.tonePlayable(131, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
+})
+```
+
+## License
+MIT
+
+## Supported targets
+* for PXT/microbit
+(The metadata above is needed for package search.)
