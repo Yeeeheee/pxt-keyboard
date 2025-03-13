@@ -1,17 +1,23 @@
 enum KeyboardButton {
-    A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+    Q = 1,W,E,R,T,Y,U,
+    I = 0,
+    O = 29,
+    P = 24,
+    A = 9,S,D,F,G,H,J,
+    K = 8,
+    L = 30,
+    Z = 18,X,C,V,B,N,
+    M = 16,
+    CapsLock = 17,
+    Backspace = 31,
+    NumLock = 25,Space,FullStop,Enter
+
+    //Q,W,E,R,T,Y,U,I,O,P,A,S,D,F,G,H,J,K,L,Z,X,C,V,B,N,M
 }
 namespace keyboard {
-    
-    // enum LEDState {
-    //     //% block="off"
-    //     Off,
-    //     //% block="on"
-    //     On
-    // }
 
-    const _rows: number = 3;
-    const _cols: number = 3;
+    const _rows: number = 4;
+    const _cols: number = 8;
     let _columnSerials: number[];
     let setupStatus: boolean = false;
     let runKeyboardStatus: boolean = false;
@@ -19,7 +25,7 @@ namespace keyboard {
     let comIncrement: number = 0;
     let SIPO: ShiftRegister;
     let PISO: ShiftRegister;
-    let scanCode: number;
+    //let scanCode: number;
     
     class ShiftRegister {
         private shiftPin: DigitalPin;
@@ -43,13 +49,18 @@ namespace keyboard {
     //% fixedInstances
     export class Button{
         public id: number;
-        public letter: string;
+        public cLetter: string;
+        public lLetter: string;
+        public nLetter: string;
         private isPressed: boolean = false;
+        private pressedCount: number = 0;
         private funct: () => void;
         
-        constructor(id: number, letter: string){
+        constructor(id: number, cLetter: string, lLetter: string, nLetter: string){
             this.id = id;
-            this.letter = letter;
+            this.cLetter = cLetter;
+            this.lLetter = lLetter;
+            this.nLetter = nLetter;
         }
         
         //% blockId=onEvent block="on button $this |pressed" blockExternalInputs=false
@@ -57,17 +68,40 @@ namespace keyboard {
             this.funct = handler;
         }
         
-        setIsPressed(isPressed: boolean){
-            this.isPressed = isPressed;
+        setPressed(){
+            if(!this.isPressed){
+                this.isPressed = true;
+                return;
+            }
+            if(this.pressedCount < 200){
+                this.pressedCount += 1 
+            }
+        }
+
+        setReleased(){
+            if(this.isPressed){
+                this.pressedCount = 0
+                this.isPressed = false;
+            }
         }
         
         //% blockId=getButton block="button $this| is pressed"
         getIsPressed(){
             return this.isPressed;
         }
-        
+
+        getPressedCount(){
+            return this.pressedCount;
+        }
+
         getLetter(){
-            return this.letter;
+            if(ButtonHandler.numLock){
+                return this.nLetter
+            }
+            if(ButtonHandler.capsLock){
+                return this.cLetter
+            }
+            return this.lLetter
         }
 
         runEvent(){
@@ -78,30 +112,46 @@ namespace keyboard {
         }
     }
     
+    //% fixedInstances
     class ButtonHandler{
-        private static pressedButtons: Button[] = [];
+        public static numLock: boolean = false;
+        public static capsLock: boolean = false;
+        public static anyfunct: () => void;
         //private static storelines: string;
-        static setButtonPressed(scanCode: number){
-            buttonMaps[scanCode].setIsPressed(true);
-            this.pressedButtons.push(buttonMaps[scanCode]);
-            //this.storelines += buttonMaps[scanCode].getLetter();
+        static ButtonPressed(scanCode: number){
+            if(buttonMaps[scanCode] != null){
+                if(!buttonMaps[KeyboardButton.NumLock].getIsPressed() && KeyboardButton.NumLock == scanCode){
+                    this.numLock = !this.numLock;
+                }
+                if(!buttonMaps[KeyboardButton.CapsLock].getIsPressed() && KeyboardButton.CapsLock == scanCode){
+                    this.capsLock = !this.capsLock;
+                }
+                buttonMaps[scanCode].setPressed();
+                displayLED(scanCode);
+                buttonMaps[scanCode].runEvent();
+                this.runAnyFunct()
+            }
         }
         
-        static clearPrevButtonPressed(){
-            this.pressedButtons.forEach(element => {
-                element.setIsPressed(false)
-            });
-            this.pressedButtons = [];
+        static ButtonReleased(scanCode: number){
+            if(buttonMaps[scanCode] != null){
+                buttonMaps[scanCode].setReleased();
+            }
         }
         
-        static runHandler(){
-            this.pressedButtons.forEach(element => {
-                element.runEvent();
-            });
+        
+        private static runAnyFunct(){
+            if(this.anyfunct != null){
+                this.anyfunct()
+            }
         }
     }
-    const buttonHandler = new ButtonHandler();
 
+    //% blockId=onAnyEvent block="on button ANY bitton is pressed"
+    export function onEvent(handler: () => void) {
+            ButtonHandler.anyfunct = handler;
+    }
+    
     //% block="display LED $choosenState"
     //% $ledState.defl=State.On
     export function keyboardLed(choosenState: LEDState) {
@@ -123,14 +173,12 @@ namespace keyboard {
     //% block ="keyboard start"
     export function runKeyboard() {
         if (!setupStatus) {
-            setupKeyboard(DigitalPin.P15, DigitalPin.P14, DigitalPin.P13, DigitalPin.P12, DigitalPin.P16)
+            setupKeyboard(DigitalPin.P15, DigitalPin.P14, DigitalPin.P13, DigitalPin.P8, DigitalPin.P16)
         }
         if(!runKeyboardStatus){
             runKeyboardStatus = true;
             loops.everyInterval(10, function () {
-                ButtonHandler.clearPrevButtonPressed();
                 scanKeyboard();
-                ButtonHandler.runHandler();
             })
 
         }
@@ -150,6 +198,32 @@ namespace keyboard {
             number = Math.floor(number / 2);
         }
         return binary
+    }
+
+    function reverseArray<T>(arr: T[]) {
+        let left = 0;
+        let right = arr.length - 1;
+        
+        while (left < right) {
+
+            let temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            
+            left++;
+            right--;
+        }
+        
+        return arr;
+    }
+
+    function contains<T>(arr: T[], value: T) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === value) {
+                return true;
+            }
+        }
+        return false;
     }
 
     function mod(n: number, m: number) {
@@ -176,31 +250,20 @@ namespace keyboard {
     export function readLines() {
 
     }
-    
-    function runScanOperations(){
-        displayLED(scanCode);
-        ButtonHandler.setButtonPressed(scanCode);
-    }
 
     function scanKeyboard() {
         let rowDetected: number = communicate();
-        let temp = numberToBinary(rowDetected);
-        let rowDetectedBin: number[] = [];
-        for (let i = 0; i < _rows - temp.length; i++) {
-            rowDetectedBin.push(0);
-        }
-        rowDetectedBin = rowDetectedBin.concat(temp);
-        if (rowDetected != 0) {
-            for (let i = 0; i < _rows; i++) {
-                if (rowDetectedBin[i] == 1) {
-                    // let scanCode = ((_rows - i) * _rows) + mod(comIncrement - 1, _cols);
-                    scanCode = ((_rows - i) * _rows) + mod(comIncrement - 1, _cols);
-                    runScanOperations();
-                }
+        let rowDetectedBin: number[] = reverseArray(numberToBinary(rowDetected));
+        for (let i = 0; i < _rows + 1; i++) {
+            let scanCode = i * _cols + comIncrement  - _cols;
+            if (rowDetectedBin[i] == 1) {
+                ButtonHandler.ButtonPressed(scanCode);
+                continue
             }
+            ButtonHandler.ButtonReleased(scanCode);    
+
         }
     }
-    
     
 
 }

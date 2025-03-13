@@ -1,109 +1,126 @@
 namespace keyboard{
 //% fixedInstance whenUsed block="A"
-export const A = new Button(KeyboardButton.A, "A");
+export const A = new Button(KeyboardButton.A, "A", "a", "-");
 
 //% fixedInstance whenUsed block="B"
-export const B = new Button(KeyboardButton.B, "B");
+export const B = new Button(KeyboardButton.B, "B", "b", "&");
 
-//% fixedInstance whenUsedblock="C"
-export const C = new Button(KeyboardButton.C, "C");
+//% fixedInstance whenUsed block="C"
+export const C = new Button(KeyboardButton.C, "C", "c", "%");
 
-//% fixedInstance whenUsedblock="D"
-export const D = new Button(KeyboardButton.D, "D");
+//% fixedInstance whenUsed block="D"
+export const D = new Button(KeyboardButton.D, "D", "d", "=");
 
 //% fixedInstance whenUsed block="E"
-export const E = new Button(KeyboardButton.E, "E");
+export const E = new Button(KeyboardButton.E, "E", "e", "3");
 
 //% fixedInstance whenUsed block="F"
-export const F = new Button(KeyboardButton.F, "F");
+export const F = new Button(KeyboardButton.F, "F", "f", "(");
 
 //% fixedInstance whenUsed block="G"
-export const G = new Button(KeyboardButton.G, "G");
+export const G = new Button(KeyboardButton.G, "G", "g", ")");
 
 //% fixedInstance whenUsed block="H"
-export const H = new Button(KeyboardButton.H, "H");
+export const H = new Button(KeyboardButton.H, "H", "h", "{");
 
 //% fixedInstance whenUsed block="I"
-export const I = new Button(KeyboardButton.I, "I");
+export const I = new Button(KeyboardButton.I, "I", "i", "8");
 
 //% fixedInstance whenUsed block="J"
-export const J = new Button(KeyboardButton.J, "J");
+export const J = new Button(KeyboardButton.J, "J", "j", "}");
 
 //% fixedInstance whenUsed block="K"
-export const K = new Button(KeyboardButton.K, "K");
+export const K = new Button(KeyboardButton.K, "K", "k", "!");
 
 //% fixedInstance whenUsed block="L"
-export const L = new Button(KeyboardButton.L, "L");
+export const L = new Button(KeyboardButton.L, "L", "l", "\"");
 
 //% fixedInstance whenUsed block="M"
-export const M = new Button(KeyboardButton.M, "M");
+export const M = new Button(KeyboardButton.M, "M", "m", "#");
 
 //% fixedInstance whenUsed block="N"
-export const N = new Button(KeyboardButton.N, "N");
+export const N = new Button(KeyboardButton.N, "N", "n", "*");
 
 //% fixedInstance whenUsed block="O"
-export const O = new Button(KeyboardButton.O, "O");
+export const O = new Button(KeyboardButton.O, "O", "o", "9");
 
 //% fixedInstance whenUsed block="P"
-export const P = new Button(KeyboardButton.P, "P");
+export const P = new Button(KeyboardButton.P, "P", "p", "0");
 
 //% fixedInstance whenUsed block="Q"
-export const Q = new Button(KeyboardButton.Q, "Q");
+export const Q = new Button(KeyboardButton.Q, "Q", "q", "1");
 
 //% fixedInstance whenUsed block="R"
-export const R = new Button(KeyboardButton.R, "R");
+export const R = new Button(KeyboardButton.R, "R", "r", "4");
 
 //% fixedInstance whenUsed block="S"
-export const S = new Button(KeyboardButton.S, "S");
+export const S = new Button(KeyboardButton.S, "S", "s", "+");
 
 //% fixedInstance whenUsed block="T"
-export const T = new Button(KeyboardButton.T, "T");
+export const T = new Button(KeyboardButton.T, "T", "t", "5");
 
 //% fixedInstance whenUsed block="U"
-export const U = new Button(KeyboardButton.U, "U");
+export const U = new Button(KeyboardButton.U, "U", "u", "7");
 
 //% fixedInstance whenUsed block="V"
-export const V = new Button(KeyboardButton.V, "V");
+export const V = new Button(KeyboardButton.V, "V", "v", "^");
 
 //% fixedInstance whenUsed block="W"
-export const W = new Button(KeyboardButton.W, "W");
+export const W = new Button(KeyboardButton.W, "W", "w", "2");
 
 //% fixedInstance whenUsed block="X"
-export const X = new Button(KeyboardButton.X, "X");
+export const X = new Button(KeyboardButton.X, "X", "x", "/");
 
 //% fixedInstance whenUsed block="Y"
-export const Y = new Button(KeyboardButton.Y, "Y");
+export const Y = new Button(KeyboardButton.Y, "Y", "y", "6");
 
 //% fixedInstance whenUsed block="Z"
-export const Z = new Button(KeyboardButton.Z, "Z");
+export const Z = new Button(KeyboardButton.Z, "Z", "z", "£");
 
+export const CapsLock = new Button(KeyboardButton.CapsLock, "","","");
+
+export const Backspace = new Button(KeyboardButton.Backspace, "\b","\b","\b");
+
+export const NumLock = new Button(KeyboardButton.NumLock, "","","");
+
+export const Space = new Button(KeyboardButton.Space, " "," "," ");
+
+export const FullStop = new Button(KeyboardButton.FullStop, ".",".",".");
+
+export const Enter = new Button(KeyboardButton.Enter, "\n","\n","\n");
 
 export const buttonMaps: { [scanCode: number]: Button } = {
-    0: A,
-    1: B,
-    2: C,
-    3: D,
-    4: E,
-    5: F,
-    6: G,
-    7: H,
-    8: I,
-    9: J,
-    10: K,
-    11: L,
-    12: M,
-    13: N,
-    14: O,
-    15: P,
-    16: Q,
-    17: R,
-    18: S,
-    19: T,
-    20: U,
-    21: V,
-    22: W,
-    23: X,
-    24: Y,
-    25: Z,
+    [KeyboardButton.A]: A,
+    [KeyboardButton.B]: B,
+    [KeyboardButton.C]: C,
+    [KeyboardButton.D]: D,
+    [KeyboardButton.E]: E,
+    [KeyboardButton.F]: F,
+    [KeyboardButton.G]: G,
+    [KeyboardButton.H]: H,
+    [KeyboardButton.I]: I,
+    [KeyboardButton.J]: J,
+    [KeyboardButton.K]: K,
+    [KeyboardButton.L]: L,
+    [KeyboardButton.M]: M,
+    [KeyboardButton.N]: N,
+    [KeyboardButton.O]: O,
+    [KeyboardButton.P]: P,
+    [KeyboardButton.Q]: Q,
+    [KeyboardButton.R]: R,
+    [KeyboardButton.S]: S,
+    [KeyboardButton.T]: T,
+    [KeyboardButton.U]: U,
+    [KeyboardButton.V]: V,
+    [KeyboardButton.W]: W,
+    [KeyboardButton.X]: X,
+    [KeyboardButton.Y]: Y,
+    [KeyboardButton.Z]: Z,
+    [KeyboardButton.CapsLock]: CapsLock,
+    [KeyboardButton.Backspace]: Backspace,
+    [KeyboardButton.NumLock]: NumLock,
+    [KeyboardButton.Space]: Space,
+    [KeyboardButton.FullStop]: FullStop,
+    [KeyboardButton.Enter]: Enter
 };
 }
