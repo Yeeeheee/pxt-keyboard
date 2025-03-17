@@ -147,7 +147,7 @@ namespace keyboard {
         }
     }
 
-    //% blockId=onAnyEvent block="on button ANY bitton is pressed"
+    //% blockId=onAnyEvent block="on ANY button pressed"
     export function onEvent(handler: () => void) {
             ButtonHandler.anyfunct = handler;
     }
