@@ -200,32 +200,6 @@ namespace keyboard {
         return binary
     }
 
-    function reverseArray<T>(arr: T[]) {
-        let left = 0;
-        let right = arr.length - 1;
-        
-        while (left < right) {
-
-            let temp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = temp;
-            
-            left++;
-            right--;
-        }
-        
-        return arr;
-    }
-
-    function contains<T>(arr: T[], value: T) {
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i] === value) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     function communicate() {
         SIPO.unlatch(); 
         PISO.unlatch();
@@ -249,12 +223,13 @@ namespace keyboard {
 
     function scanKeyboard() {
         let rowDetected: number = communicate();
-        let rowDetectedBin: number[] = reverseArray(numberToBinary(rowDetected));
+        let rowDetectedBin: number[] = numberToBinary(rowDetected);
+        rowDetectedBin.reverse();
         for (let i = 0; i < _rows + 1; i++) {
             let scanCode = i * _cols + comIncrement  - _cols;
             if (rowDetectedBin[i] == 1) {
                 ButtonHandler.ButtonPressed(scanCode);
-                continue
+                continue;
             }
             ButtonHandler.ButtonReleased(scanCode);    
 
