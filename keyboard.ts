@@ -226,10 +226,6 @@ namespace keyboard {
         return false;
     }
 
-    function mod(n: number, m: number) {
-        return ((n % m) + m) % m;
-    }
-
     function communicate() {
         SIPO.unlatch(); 
         PISO.unlatch();
