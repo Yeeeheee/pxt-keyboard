@@ -1,6 +1,7 @@
 # pxt-keyboard
 
 Micro:bit keyboard expansion
+Hardware: https://github.com/Yeeeheee/pxt-keyboard-hardware
 
 ## Use as Extension
 
